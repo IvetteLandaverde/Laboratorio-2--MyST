@@ -1,11 +1,11 @@
 
 """
 # -- --------------------------------------------------------------------------------------------------- -- #
-# -- project: A SHORT DESCRIPTION OF THE PROJECT                                                         -- #
+# -- project:High-Frequency Models a) Asset Pricing Theory b) Roll Model                                                         -- #
 # -- script: functions.py : python script with general functions                                         -- #
-# -- author: YOUR GITHUB USER NAME                                                                       -- #
-# -- license: THE LICENSE TYPE AS STATED IN THE REPOSITORY                                               -- #
-# -- repository: YOUR REPOSITORY URL                                                                     -- #
+# -- author: IvetteLandaverde                                                                     -- #
+# -- license: GNU General Public License v3.0                                            -- #
+# -- repository: https://github.com/IvetteLandaverde/Laboratorio-2--MyST                                                               -- #
 # -- --------------------------------------------------------------------------------------------------- -- #
 """
 import data as dt
