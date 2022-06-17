@@ -9,6 +9,32 @@
 # -- --------------------------------------------------------------------------------------------------- -- #
 """
 
+#--------- LIBRERIAS Y DATOS --------- #
+import data as dt
+import visualizations as vz
+import numpy as np
+import pandas as pd
+import json
+import random
+import functions as fn 
+
+#--------- LIBRERIAS Y DATOS --------- #
+
+
+
+#--------- DATOS VISUALIZACIONES --------- #
+#APT
+sample_from_dict(dt.ob_data)
+
+#--------- DATOS VISUALIZACIONES  --------- #
+
+
+
+
+
+
+
+# --------- #
 import pandas as pd
 import data as dt
 
