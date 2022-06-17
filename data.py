@@ -17,8 +17,10 @@ import pandas as pd
 import json
 
 # Opening JSON file
-#f= open("orderbooks_05jul21.json")
-f=open('/Users/ivettelandaverde/Desktop/MyST/lab1/Laboratorio-1/orderbooks_05jul21.json')
+f= open("orderbooks_05jul21.json")
+#f=open('/Users/ivettelandaverde/Desktop/MyST/laboratorio 2/https:/github.com/IvetteLandaverde/Laboratorio-2--MyST/orderbooks_05jul21.json')
+#f=open('https:/github.com/IvetteLandaverde/Laboratorio-2--MyST/orderbooks_05jul21.json')
+
 
 # Returns JSON object as a dictionary
 orderbooks_data = json.load(f)
