@@ -56,7 +56,7 @@ exp_1['e2']['proporcion']
 # -- Repetir lo anterior para otros experimentos con datos de cada minuto 
 # experimentos   00:06:00 - 00:06:59 ... 00:05:00 - 00:05:59
 # hacer un dict para guardar resultados finales:
-exp_2 = {'intervalo':list(np.arange(0,60)),'total':[],'e1_conteo':[],'e1_proporcion':[],'e2_conteo':[],'e2_proporcion':[]},index = list(np.arange(0,60))
+exp_2 = {'intervalo':list(np.arange(0,60)),'total':[],'e1_conteo':[],'e1_proporcion':[],'e2_conteo':[],'e2_proporcion':[]}
 # nota: hacer los calculos ahi mismo en el dataframe e irlo llenando con la info por minuto
 # nota 2: se puede hacer dataframe hasta que ya tenga datos el diccionario 
 exp_2 = pd.DataFrame({'intervalo':list(np.arange(0,60)),'total':[],'e1_conteo':[],'e1_proporcion':[],'e2_conteo':[],'e2_proporcion':[]},index = list(np.arange(0,60)))
@@ -70,10 +70,11 @@ exp_2 = pd.DataFrame({'intervalo':list(np.arange(0,60)),'total':[],'e1_conteo':[
 minutes = list(np.arange(0,60))# esto es lo que queremos valuar, del 1 al 59
 [i_ts.minute for i_ts in l_ts]
 #hago una lista para ver si ya todos sosn valores unicos, sino son arreglarlo
-list(set([i_ts.minute for i_ts in l_ts]))
+#list(set([i_ts.minute for i_ts in l_ts]))
 # para saber si si son se igualan ambas:
-list(set([i_ts.minute for i_ts in l_ts])) == list([i_ts.minute for i_ts in l_ts])
+#list(set([i_ts.minute for i_ts in l_ts])) == list([i_ts.minute for i_ts in l_ts])
 
+#jwhek
 
 
 
