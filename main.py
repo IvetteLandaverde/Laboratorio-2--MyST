@@ -18,57 +18,20 @@ import json
 import random
 import functions as fn 
 
-#--------- LIBRERIAS Y DATOS --------- #
+# -------- Tests modelo APT midprice: -------
+# experimento 1:
+fn.experimento_1_midprice(dt.ob_data)
+#experimento 2: (por minuto)
+fn.df_exp2_2
+#visualizaciones experimento 2:
+vz.grafica_midprice(data = fn.df_exp2_2, price_type = 'Mid Price', colors = ['orange', 'red'])
 
 
+# -------- Tests modelo APT weighted midprice: -------
+# experimento 1:
+fn.experimento_1_w_midprice(dt.ob_data)
+#experimento 2: (por minuto)
+fn.df_exp2_2_w
+#visualizaciones experimento 2:
+vz.grafica_midprice_w(data = fn.df_exp2_2_w, price_type = 'Mid Price', colors = ['orange', 'red'])
 
-#--------- DATOS VISUALIZACIONES --------- #
-#APT
-sample_from_dict(dt.ob_data)
-
-#--------- DATOS VISUALIZACIONES  --------- #
-
-
-
-
-
-
-
-# --------- #
-import pandas as pd
-import data as dt
-
-# -- TEST 1 : 
-# verify that the script is being read
-print(dt.dict_test)
-
-# -- TEST 2 :
-# verify that installed pandas module works correctly
-df_dict_test = pd.DataFrame(dt.dict_test, index=[0, 1])
-print(df_dict_test)
-
-# -- TEST 3 :
-# verify you can use plotly and visualize plots in jupyter notebook
-
-import chart_studio.plotly as py   # various tools (jupyter offline print)
-import plotly.graph_objects as go  # plotting engine
-
-# example data
-df = pd.DataFrame({'column_a': [1, 2, 3, 4, 5], 'column_b': [1, 2, 3, 4, 5]})
-# basic plotly plot
-data = [go.Bar(x=df['column_a'], y=df['column_b'])]
-# instruction to view it inside jupyter
-py.iplot(data, filename='jupyter-basic_bar')
-# (alternatively) instruction to view it in web app of plotly
-py.plot(data)
-
-# -- TEST 4 :
-# verify you can use plotly and visualize plots in web browser locally
-
-import plotly.io as pio            # to define input-output of plots
-pio.renderers.default = "browser"  # to render the plot locally in your default web browser
-
-# basic plotly plot
-plot_data = go.Figure(go.Bar(x=df['column_a'], y=df['column_b']))
-# instruction to view it in specified render (in this case browser)
-plot_data.show()
