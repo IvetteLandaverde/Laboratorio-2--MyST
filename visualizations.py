@@ -15,11 +15,11 @@ import functions as fn
 import plotly.graph_objects as go
 
 #
-# basic plotly plot
+# basic plotly plot 1:
 plot_data_1 = go.Figure(go.Bar(x=fn.df_exp2_2['e1'], y=fn.df_exp2_2['proporcion1']))
 plot_data_1.show()
 
-# basic plotly plot
+# basic plotly plot 2:
 plot_data_2 = go.Figure(go.Bar(x=fn.df_exp2_2_w['e1_w'], y=fn.df_exp2_2_w['proporcion1_w']))
 plot_data_2.show()
 #
