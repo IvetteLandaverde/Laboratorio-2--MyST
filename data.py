@@ -12,7 +12,6 @@
 # ------- ORDER BOOKS -------- #
 
 #dict_test = {'key_a': 'a', 'key_b': 'b'}
-import numpy as np
 import pandas as pd
 import json
 

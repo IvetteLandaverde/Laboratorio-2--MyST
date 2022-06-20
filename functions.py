@@ -11,12 +11,15 @@
 
 # importar librerias y datos: 
 import data as dt
-import visualizations as vz
 import numpy as np
 import pandas as pd
-import json
-import time
+#import json
+#import time
 import random
+import plotly.graph_objects as go
+
+#if __name__ == '__main__':  
+    
 
 # --------- FUNCIÓN SAMPLE FROM DICT ------- #
 def sample_from_dict(d, sample=1):
@@ -238,27 +241,27 @@ df_exp2_2_w['total_w'] = valor_e1_w+valor_e2_w
 df_exp2_2_w['proporcion1_w'] = valor_proporcion1_w
 df_exp2_2_w['proporcion2_w'] = valor_proporcion2_w
 #
+
 #
 #
 #
 #
 # --------- ROLL MODEL ------- #
-
 data_ob=dt.ob_data
 ob_ts=list(data_ob.keys())#
 l_ts= [pd.to_datetime(i_ts) for i_ts in ob_ts]#
 l_mid = [(data_ob[ob_ts[i]]['ask'][0] + data_ob[ob_ts[i]]['bid'][0])* 0.5 for i in range(0, len(ob_ts))]
+price_data = l_mid = [(data_ob[ob_ts[i]]['ask'][0] + data_ob[ob_ts[i]]['bid'][0])* 0.5 for i in range(0, len(ob_ts))]
 def roll_model(data,m_roll):
     data = data_ob
     ob_ts=list(data_ob.keys())#
-    l_ts= [pd.to_datetime(i_ts) for i_ts in ob_ts]#
     l_mid = [(data_ob[ob_ts[i]]['ask'][0] + data_ob[ob_ts[i]]['bid'][0])* 0.5 for i in range(0, len(ob_ts))]
     m_roll = l_mid
     ob_ts = list(data.keys())
     bid = [data[ob_ts[i]]['bid'][0] for i in range(0, len(ob_ts))]
     ask = [data[ob_ts[i]]['ask'][0] for i in range(0, len(ob_ts))]
     spread = list(np.array(ask) - np.array(bid))
-    df_roll = pd.DataFrame(index = pd.to_datetime(ob_ts), data = {'ask': ask,'ask_roll': ask,'bid': bid,'bid_roll': bid, 'mid': price_data,'mid_roll': price_data, 'spread': spread})
+    df_roll = pd.DataFrame(index = pd.to_datetime(ob_ts), data = {'ask': ask,'ask_roll': ask,'bid': bid,'bid_roll': bid, 'mid': m_roll,'mid_roll': m_roll, 'spread': spread})
     delta_mid = df_roll['mid'].diff(1)
     delta_mid_lag = df_roll['mid'].shift(1).diff(1) 
     df_delta = pd.DataFrame({'delta mid t': delta_mid, 'delta_mid_lag': delta_mid_lag})
@@ -274,32 +277,53 @@ def roll_model(data,m_roll):
     constant = np.sqrt(-covar) 
     df_roll['mid_roll'] = np.round(df_roll['mid'] + constant,2)
     return df_roll
+#head de los resultados roll:
+#roll_model2=roll_model(data_ob,l_mid).head(5)
 
-
-# para graficar:
+# GRAFICAS CON HEAD:
 #bid_real:
-eje_y=list(np.arange(1,2402))
+#eje_y=list(np.arange(1,2402))
+eje_y=list(np.arange(1,242))
 plot_data_bid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['bid'], y=eje_y))
-plot_data_bid.show()
+bid_real=plot_data_bid.show()
 #bid_roll:
 plot_data_bid_roll = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['bid_roll'], y=eje_y))
-plot_data_bid_roll.show()
+bid_roll=plot_data_bid_roll.show()
 #ask_real:
 eje_y=list(np.arange(1,2402))
 plot_data_ask = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['ask'], y=eje_y))
-plot_data_ask.show()
+ask_real=plot_data_ask.show()
 #ask_roll:
 plot_data_ask_roll = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['ask_roll'], y=eje_y))
-plot_data_ask_roll.show()
+ask_roll=plot_data_ask_roll.show()
 #mid_real:
 eje_y=list(np.arange(1,2402))
 plot_data_mid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['mid'], y=eje_y))
-plot_data_mid.show()
+mid_real=plot_data_mid.show()
 #mid_roll:
-plot_data_ask_mid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['mid_roll'], y=eje_y))
-plot_data_ask_mid.show()
+plot_data_mid_roll = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['mid_roll'], y=eje_y))
+mid_roll=plot_data_mid_roll.show()
 
+##
 
+#-------- GRAFICA PARA MIDPRICE POR MINUTO -----------#
+def grafica_midprice(data: pd.DataFrame, price_type: str, colors: list) -> go.Figure:
+    fig = go.Figure(data = [go.Bar(name = 'e1', x = data.index, y = data['proporcion1'], marker_color = colors[0]), \
+        go.Bar(name = 'e2', x = data.index, y = data['proporcion2'], marker_color = colors[1])])
+    fig.update_layout(autosize = False, width = 1000, height = 600, barmode = 'stack', \
+        title_text = f'Proporción por minuto, midprice APT')
+    fig.update_xaxes(title_text = 'Minuto')
+    fig.update_yaxes(title_text = 'Proporción')
+    return fig.show()
+#grafica_midprice(data = fn.df_exp2_2, price_type = 'Mid Price', colors = ['orange', 'red'])
 
-
-
+#-------- GRAFICA PARA WEIGHTED MIDPRICE POR MINUTO -----------#
+def grafica_midprice_w(data: pd.DataFrame, price_type: str, colors: list)-> go.Figure:
+    fig = go.Figure(data = [go.Bar(name = 'e1_w', x = data.index, y = data['proporcion1_w'],marker_color = colors[0]), \
+        go.Bar(name = 'e2_w', x = data.index, y = data['proporcion2_w'], marker_color = colors[1])])
+    fig.update_layout(autosize = False, width = 1000, height = 600, barmode = 'stack', \
+        title_text = f'Proproción martingala por minuto, weighted midprice APT')
+    fig.update_xaxes(title_text = 'Minuto')
+    fig.update_yaxes(title_text = 'Proporción')
+    return fig.show()
+#grafica_midprice_w(data = fn.df_exp2_2_w, price_type = 'Mid Price', colors = ['orange', 'red'])
