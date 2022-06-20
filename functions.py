@@ -240,15 +240,64 @@ df_exp2_2_w['proporcion2_w'] = valor_proporcion2_w
 #
 #
 #
+#
+#
 # --------- ROLL MODEL ------- #
 
-# --------- ROLL MODEL ------- #
+data_ob=dt.ob_data
+ob_ts=list(data_ob.keys())#
+l_ts= [pd.to_datetime(i_ts) for i_ts in ob_ts]#
+l_mid = [(data_ob[ob_ts[i]]['ask'][0] + data_ob[ob_ts[i]]['bid'][0])* 0.5 for i in range(0, len(ob_ts))]
+def roll_model(data,m_roll):
+    data = data_ob
+    ob_ts=list(data_ob.keys())#
+    l_ts= [pd.to_datetime(i_ts) for i_ts in ob_ts]#
+    l_mid = [(data_ob[ob_ts[i]]['ask'][0] + data_ob[ob_ts[i]]['bid'][0])* 0.5 for i in range(0, len(ob_ts))]
+    m_roll = l_mid
+    ob_ts = list(data.keys())
+    bid = [data[ob_ts[i]]['bid'][0] for i in range(0, len(ob_ts))]
+    ask = [data[ob_ts[i]]['ask'][0] for i in range(0, len(ob_ts))]
+    spread = list(np.array(ask) - np.array(bid))
+    df_roll = pd.DataFrame(index = pd.to_datetime(ob_ts), data = {'ask': ask,'ask_roll': ask,'bid': bid,'bid_roll': bid, 'mid': price_data,'mid_roll': price_data, 'spread': spread})
+    delta_mid = df_roll['mid'].diff(1)
+    delta_mid_lag = df_roll['mid'].shift(1).diff(1) 
+    df_delta = pd.DataFrame({'delta mid t': delta_mid, 'delta_mid_lag': delta_mid_lag})
+    covar = df_delta.cov().iloc[1, 0]
+    constant = np.sqrt(-covar) 
+    #crear df para llenar con los resultados: 
+    df_roll['ask_roll'] = np.round(df_roll['mid'] + constant,3)   
+    df_roll['bid_roll'] = np.round(df_roll['mid'] - constant,3)
+    delta_mid_2 = df_roll['mid'].diff(1)
+    delta_mid_lag_2 = df_roll['mid'].shift(1).diff(1) 
+    df_delta_2 = pd.DataFrame({'delta mid t': delta_mid_2, 'delta_mid_lag': delta_mid_lag_2})
+    covar = df_delta_2.cov().iloc[1, 0]
+    constant = np.sqrt(-covar) 
+    df_roll['mid_roll'] = np.round(df_roll['mid'] + constant,2)
+    return df_roll
 
-#Pendientes:
-# Hacer el roll model 
-# Hacer una gráfica de analisis simple, entre exploratorio y descriptivo p/cada modelo
 
-
+# para graficar:
+#bid_real:
+eje_y=list(np.arange(1,2402))
+plot_data_bid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['bid'], y=eje_y))
+plot_data_bid.show()
+#bid_roll:
+plot_data_bid_roll = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['bid_roll'], y=eje_y))
+plot_data_bid_roll.show()
+#ask_real:
+eje_y=list(np.arange(1,2402))
+plot_data_ask = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['ask'], y=eje_y))
+plot_data_ask.show()
+#ask_roll:
+plot_data_ask_roll = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['ask_roll'], y=eje_y))
+plot_data_ask_roll.show()
+#mid_real:
+eje_y=list(np.arange(1,2402))
+plot_data_mid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['mid'], y=eje_y))
+plot_data_mid.show()
+#mid_roll:
+plot_data_ask_mid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['mid_roll'], y=eje_y))
+plot_data_ask_mid.show()
 
 
 
