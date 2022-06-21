@@ -50,3 +50,4 @@ def grafica_midprice_w(data: pd.DataFrame, price_type: str, colors: list)-> fn.g
 
 
 
+
