@@ -5,7 +5,7 @@
 # -- script: main.py : python script with the main functionality                                         -- #
 # -- author: YOUR GITHUB USER NAME                                                                       -- #
 # -- license: THE LICENSE TYPE AS STATED IN THE REPOSITORY                                               -- #
-# -- repository: YOUR REPOSITORY URL                                                                     -- #
+# -- repository: https://github.com/IvetteLandaverde/Laboratorio-2--MyST                                                               -- #
 # -- --------------------------------------------------------------------------------------------------- -- #
 """
 
@@ -287,7 +287,7 @@ def roll_model(data,m_roll):
     bid = [data[ob_ts[i]]['bid'][0] for i in range(0, len(ob_ts))]
     ask = [data[ob_ts[i]]['ask'][0] for i in range(0, len(ob_ts))]
     spread = list(np.array(ask) - np.array(bid))
-    df_roll = pd.DataFrame(index = pd.to_datetime(ob_ts), data = {'ask': ask,'ask_roll': ask,'bid': bid,'bid_roll': bid, 'mid': price_data,'mid_roll': price_data, 'spread': spread})
+    df_roll = pd.DataFrame(index = pd.to_datetime(ob_ts), data = {'ask': ask,'ask_roll': ask,'bid': bid,'bid_roll': bid, 'mid': m_roll,'mid_roll': m_roll, 'spread': spread})
     delta_mid = df_roll['mid'].diff(1)
     delta_mid_lag = df_roll['mid'].shift(1).diff(1) 
     df_delta = pd.DataFrame({'delta mid t': delta_mid, 'delta_mid_lag': delta_mid_lag})
@@ -306,29 +306,7 @@ def roll_model(data,m_roll):
 #head de los resultados roll:
 roll_model2=roll_model(data_ob,l_mid).head(5)
 
-# GRAFICAS CON HEAD:
-#bid_real:
-#eje_y=list(np.arange(1,2402))
-eje_y=list(np.arange(1,6))
-plot_data_bid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['bid'][:5], y=eje_y))
-plot_data_bid.show()
-#bid_roll:
-plot_data_bid_roll = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['bid_roll'][:5], y=eje_y))
-plot_data_bid_roll.show()
-#ask_real:
-eje_y=list(np.arange(1,2402))
-plot_data_ask = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['ask'][:5], y=eje_y))
-plot_data_ask.show()
-#ask_roll:
-plot_data_ask_roll = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['ask_roll'][:5], y=eje_y))
-plot_data_ask_roll.show()
-#mid_real:
-eje_y=list(np.arange(1,2402))
-plot_data_mid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['mid'][:5], y=eje_y))
-plot_data_mid.show()
-#mid_roll:
-plot_data_ask_mid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['mid_roll'][:5], y=eje_y))
-plot_data_ask_mid.show()
+
 
 #-------- GRAFICA PARA MIDPRICE POR MINUTO -----------#
 def grafica_midprice(data: pd.DataFrame, price_type: str, colors: list) -> go.Figure:

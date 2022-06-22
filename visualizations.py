@@ -5,7 +5,7 @@
 # -- script: visualizations.py : python script with data visualization functions                         -- #
 # -- author: YOUR GITHUB USER NAME                                                                       -- #
 # -- license: THE LICENSE TYPE AS STATED IN THE REPOSITORY                                               -- #
-# -- repository: YOUR REPOSITORY URL                                                                     -- #
+# -- repository: https://github.com/IvetteLandaverde/Laboratorio-2--MyST                                                                -- #
 # -- --------------------------------------------------------------------------------------------------- -- #
 """
 

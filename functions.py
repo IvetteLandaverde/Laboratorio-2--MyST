@@ -284,7 +284,7 @@ def roll_model(data,m_roll):
 def grafica_midprice(data: pd.DataFrame, price_type: str, colors: list) -> go.Figure:
     fig = go.Figure(data = [go.Bar(name = 'e1', x = data.index, y = data['proporcion1'], marker_color = colors[0]), \
         go.Bar(name = 'e2', x = data.index, y = data['proporcion2'], marker_color = colors[1])])
-    fig.update_layout(autosize = False, width = 1000, height = 600, barmode = 'stack', \
+    fig.update_layout(autosize = False, width = 800, height = 400, barmode = 'stack', \
         title_text = f'Proporción por minuto, midprice APT')
     fig.update_xaxes(title_text = 'Minuto')
     fig.update_yaxes(title_text = 'Proporción')
@@ -295,36 +295,33 @@ def grafica_midprice(data: pd.DataFrame, price_type: str, colors: list) -> go.Fi
 def grafica_midprice_w(data: pd.DataFrame, price_type: str, colors: list)-> go.Figure:
     fig = go.Figure(data = [go.Bar(name = 'e1_w', x = data.index, y = data['proporcion1_w'],marker_color = colors[0]), \
         go.Bar(name = 'e2_w', x = data.index, y = data['proporcion2_w'], marker_color = colors[1])])
-    fig.update_layout(autosize = False, width = 1000, height = 600, barmode = 'stack', \
+    fig.update_layout(autosize = False, width = 800, height = 400, barmode = 'stack', \
         title_text = f'Proproción martingala por minuto, weighted midprice APT')
     fig.update_xaxes(title_text = 'Minuto')
     fig.update_yaxes(title_text = 'Proporción')
     return fig.show()
 #grafica_midprice_w(data = fn.df_exp2_2_w, price_type = 'Mid Price', colors = ['orange', 'red'])
 
-
-# GRAFICAS CON HEAD:
-#bid_real:
-#eje_y=list(np.arange(1,242))
-#plot_data_bid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['bid'], y=eje_y))
-#bid_real=plot_data_bid.show()
-#bid_roll:
-#plot_data_bid_roll = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['bid_roll'], y=eje_y))
-#bid_roll=plot_data_bid_roll.show()
-#ask_real:
-#eje_y=list(np.arange(1,2402))
-#plot_data_ask = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['ask'], y=eje_y))
-#ask_real=plot_data_ask.show()
-#ask_roll:
-#plot_data_ask_roll = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['ask_roll'], y=eje_y))
-#ask_roll=plot_data_ask_roll.show()
-#mid_real:
-#eje_y=list(np.arange(1,2402))
-#plot_data_mid = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['mid'], y=eje_y))
-#mid_real=plot_data_mid.show()
-#mid_roll:
-#plot_data_mid_roll = go.Figure(go.Bar(x=roll_model(data_ob,l_mid)['mid_roll'], y=eje_y))
-#mid_roll=plot_data_mid_roll.show()
-
 ##
+#GRAFICAS ROLL MODEL:
 
+#ask real:
+ask_real= roll_model(data_ob,l_mid)["ask"]
+def grafica_ask_real(ask_real):
+    fig_ask_real=go.Figure(data=go.Scatter(x=np.arange(1,2401), y=ask_real))
+    return fig_ask_real.show()
+#ask_roll :
+ask_roll = roll_model(data_ob,l_mid)["ask"]
+def grafica_ask_roll(ask_roll):
+    fig_ask_roll=go.Figure(data=go.Scatter(x=np.arange(1,2401), y=ask_roll))
+    return fig_ask_roll.show()
+# bid_real :
+bid_real = roll_model(data_ob,l_mid)["ask"]
+def grafica_bid_real(bid_real):
+    fig_bid_real=go.Figure(data=go.Scatter(x=np.arange(1,2401), y=bid_real))
+    return fig_bid_real.show()
+# bid_prueba : 
+bid_roll = roll_model(data_ob,l_mid)["ask"]
+def grafica_bid_roll(bid_roll):
+    fig_bid_roll=go.Figure(data=go.Scatter(x=np.arange(1,2401), y=bid_roll))
+    return fig_bid_roll.show()
