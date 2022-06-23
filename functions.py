@@ -302,26 +302,28 @@ def grafica_midprice_w(data: pd.DataFrame, price_type: str, colors: list)-> go.F
     return fig.show()
 #grafica_midprice_w(data = fn.df_exp2_2_w, price_type = 'Mid Price', colors = ['orange', 'red'])
 
-##
-#GRAFICAS ROLL MODEL:
 
-#ask real:
-ask_real= roll_model(data_ob,l_mid)["ask"]
-def grafica_ask_real(ask_real):
-    fig_ask_real=go.Figure(data=go.Scatter(x=np.arange(1,2401), y=ask_real))
-    return fig_ask_real.show()
-#ask_roll :
-ask_roll = roll_model(data_ob,l_mid)["ask"]
-def grafica_ask_roll(ask_roll):
-    fig_ask_roll=go.Figure(data=go.Scatter(x=np.arange(1,2401), y=ask_roll))
-    return fig_ask_roll.show()
-# bid_real :
-bid_real = roll_model(data_ob,l_mid)["ask"]
-def grafica_bid_real(bid_real):
-    fig_bid_real=go.Figure(data=go.Scatter(x=np.arange(1,2401), y=bid_real))
-    return fig_bid_real.show()
-# bid_prueba : 
-bid_roll = roll_model(data_ob,l_mid)["ask"]
-def grafica_bid_roll(bid_roll):
-    fig_bid_roll=go.Figure(data=go.Scatter(x=np.arange(1,2401), y=bid_roll))
-    return fig_bid_roll.show()
+# ---------- GRAFICAS ROLL ---------
+
+##grafica con los datos reales:
+datos=roll_model(data_ob,l_mid)
+def grafica_datos(datos):
+    fig1 = go.Figure(
+    data=[go.Scatter(x=datos.index,y = datos["bid"],name="Bid"),go.Scatter(x= roll_model(data_ob,l_mid).index,y =datos["ask"],name="Ask"),
+    go.Scatter(x= roll_model(data_ob,l_mid).index,y =datos["mid"],name="Mid")])
+    fig1.update_xaxes(title_text = 'Minuto')
+    fig1.update_yaxes(title_text = 'Valor')
+    return fig1
+
+##grafica modelo roll:
+def grafica_datos2(datos):
+    fig2 = go.Figure(
+    data=[go.Scatter(x=datos.index,y = datos["bid_roll"],name="Bid roll"),go.Scatter(x= roll_model(data_ob,l_mid).index,y =datos["ask_roll"],name="Ask roll"),
+    go.Scatter(x= roll_model(data_ob,l_mid).index,y =datos["mid_roll"],name="Mid roll")])
+    fig2.update_xaxes(title_text = 'Minuto')
+    fig2.update_yaxes(title_text = 'Valor')
+    return fig2
+
+
+
+
